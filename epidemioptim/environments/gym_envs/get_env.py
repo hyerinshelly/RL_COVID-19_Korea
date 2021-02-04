@@ -28,24 +28,30 @@ if __name__ == '__main__':
 
     simulation_horizon = 364
     stochastic = False
-    region = 'IDF'
+    #region = 'IDF'
 
-    model = get_model(model_id='prague_seirah', params=dict(region=region,
-                                                      stochastic=stochastic))
+    #model = get_model(model_id='prague_seirah', params=dict(region=region, stochastic=stochastic))
 
-    N_region = model.pop_sizes[region]
-    N_country = np.sum(list(model.pop_sizes.values()))
-    ratio_death_to_R = 0.005
+    model = get_model(model_id='sqeir', params=dict(stochastic=stochastic))
 
-    cost_function = get_cost_function(cost_function_id='multi_cost_death_gdp_controllable', params=dict(N_region=N_region,
-                                                                                          N_country=N_country,
-                                                                                          ratio_death_to_R=ratio_death_to_R)
+    #N_region = model.pop_sizes[region]
+    #N_country = np.sum(list(model.pop_sizes.values()))
+    #ratio_death_to_R = 0.005
+    ratio_death_to_R = 0.02
+
+    # cost_function = get_cost_function(cost_function_id='multi_cost_death_gdp_controllable', params=dict(N_region=N_region,
+    #                                                                                       N_country=N_country,
+    #                                                                                       ratio_death_to_R=ratio_death_to_R)
+    #                                   )
+
+    cost_function = get_cost_function(cost_function_id='korea_multi_cost_death_gdp_controllable',
+                                      params=dict(ratio_death_to_R=ratio_death_to_R)
                                       )
 
-    env = get_env(env_id='EpidemicDiscrete-v0', cost_function=cost_function, model=model, simulation_horizon=simulation_horizon)
+    env = get_env(env_id='EpidemicDiscrete-v0', cost_function=cost_function, model=model, simulation_horizon=simulation_horizon)  #왜이래이거
     env.reset()
 
-    actions = np.random.choice([0, 1], size=53)
+    actions = np.random.choice([0, 1], size=53)  # need to change to have 6 actions 0, 1, 2, 3, 4, 5, 6
     t = 0
     r = 0
     done = False
