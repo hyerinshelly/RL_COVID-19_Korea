@@ -56,7 +56,7 @@ class KoreaGdpRecess(BaseCostFunction):
         self._A = self._A / 365  # normalize to compute GDP in a day
         self._u = dict(zip([0, 1], [0, 0.5]))
 
-    def compute_current_infected(self, state, label_to_id):
+                                                        def compute_current_infected(self, state, label_to_id):
         """
         Computes the current share of individuals infected, including hospitalized and dead.
 
