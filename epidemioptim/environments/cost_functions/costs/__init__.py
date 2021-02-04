@@ -1,2 +1,4 @@
 from epidemioptim.environments.cost_functions.costs.death_toll_cost import DeathToll
 from epidemioptim.environments.cost_functions.costs.gdp_recess_cost import GdpRecess
+from epidemioptim.environments.cost_functions.costs.korea_death_toll_cost import KoreaDeathToll
+from epidemioptim.environments.cost_functions.costs.korea_gdp_recess_cost import KoreaGdpRecess
