@@ -153,6 +153,7 @@ class SqeirModel(BaseModel):
                                                   De=NormalDist(params=[5.2, 5.2 * self.noise], stochastic=self.stochastic),
                                                   Dt=NormalDist(params=[2.5, 2.5 * self.noise], stochastic=self.stochastic),
                                                   Di=NormalDist(params=[20.1, 20.1 * self.noise], stochastic=self.stochastic),
+                                                  c_fit=NormalDist(params=[40, 40*self.noise], stochastic=self.stochastic),
                                                   c0=NormalDist(params=[40, 40*self.noise], stochastic=self.stochastic),
                                                   c1=NormalDist(params=[25, 25*self.noise], stochastic=self.stochastic),
                                                   c15=NormalDist(params=[20, 20 * self.noise], stochastic=self.stochastic),
