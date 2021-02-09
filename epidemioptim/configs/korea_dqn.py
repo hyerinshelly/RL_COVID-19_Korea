@@ -1,0 +1,28 @@
+import numpy as np
+
+
+params = dict(expe_name='',
+              trial_id=0,
+              env_id='EpidemicDiscrete-v0',
+              seed=int(np.random.randint(1e6)),
+              num_train_steps=1e6,
+              simulation_horizon=364,
+              algo_id='DQN',
+              algo_params=dict(eval_and_log_every=50,
+                               save_policy_every=1000,
+                               batch_size=32,
+                               gamma=0.99,
+                               layers=(64,),
+                               replace_target_count=5000,
+                               goal_conditioned=True,
+                               lr=1e-3,
+                               buffer_size=1e6,
+                               epsilon_greedy=0.2,
+                               n_evals_if_stochastic=30,
+                               pareto_size=100),
+              model_id='sqeir',
+              model_params=dict(stochastic=True),
+              cost_id='korea_multi_cost_death_economy_controllable',
+              cost_params=dict(ratio_death_to_R=0.02,
+                               use_constraints=False),
+              )

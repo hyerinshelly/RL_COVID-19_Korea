@@ -12,24 +12,21 @@ if __name__ == '__main__':
 
     simulation_horizon = 364
     stochastic = True
-    region = 'IDF'
+    # region = 'IDF'
 
-    model = get_model(model_id='prague_seirah', params=dict(region=region,
-                                                      stochastic=stochastic))
+    model = get_model(model_id='sqeir', params=dict(stochastic=stochastic))
 
-    N_region = model.pop_sizes[region]
-    N_country = np.sum(list(model.pop_sizes.values()))
-    ratio_death_to_R = 0.005
+    # N_region = model.pop_sizes[region]
+    # N_country = np.sum(list(model.pop_sizes.values()))
+    ratio_death_to_R = 0.02
 
-    cost_function = get_cost_function(cost_function_id='multi_cost_death_gdp_controllable', params=dict(N_region=N_region,
-                                                                                                        N_country=N_country,
-                                                                                                        ratio_death_to_R=ratio_death_to_R)
+    cost_function = get_cost_function(cost_function_id='korea_multi_cost_death_economy_controllable', params=dict(ratio_death_to_R=ratio_death_to_R)
                                       )
 
     env = get_env(env_id='EpidemicDiscrete-v0',
-                  cost_function=cost_function,
-                  model=model,
-                  simulation_horizon=simulation_horizon)
+                  params=dist(cost_function=cost_function,
+                              model=model,
+                              simulation_horizon=simulation_horizon))
 
 
     all_stats = []
@@ -70,9 +67,8 @@ if __name__ == '__main__':
         ax1, fig1 = plot_stats(t=stats['history']['env_timesteps'],
                                states=np.array(stats['history']['model_states']).transpose(),
                                labels= stats['model_states_labels'],
-                               lockdown=np.array(stats['history']['lockdown']),
+                               distancing=np.array(stats['history']['distancing']),
                                time_jump=stats['time_jump'],
-                               icu_capacity=stats['icu_capacity'],
                                axs=ax1)
         plt.savefig('/home/flowers/Desktop/distrib.pdf')
 
@@ -80,7 +76,7 @@ if __name__ == '__main__':
                                states=stats['stats_run']['to_plot'],
                                labels=stats['stats_run']['labels'],
                                title=stats['title'],
-                               lockdown=np.array(stats['history']['lockdown']),
+                               distancing=np.array(stats['history']['distancing']),
                                time_jump=stats['time_jump'],
                                axs=ax2,
                                fig=fig2

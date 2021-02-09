@@ -1,16 +1,14 @@
 from epidemioptim.environments.cost_functions.costs.korea_death_toll_cost import KoreaDeathToll
-from epidemioptim.environments.cost_functions.costs.korea_gdp_recess_cost import KoreaGdpRecess
+from epidemioptim.environments.cost_functions.costs.korea_economy_cost import KoreaEconomy
 from epidemioptim.environments.cost_functions.base_multi_cost_function import BaseMultiCostFunction
 import numpy as np
 
 
-class KoreaMultiCostDeathGdpControllable(BaseMultiCostFunction):
+class KoreaMultiCostDeathEconomyControllable(BaseMultiCostFunction):
     # This function computes two independent costs:
     # The sanitary cost: # of death on this day
     # The economic cost: evaluates the opportunity cost due to a reduced workforce (neoliberal offer viewpoint) in euros.
     def __init__(self,
-                 N_region,
-                 N_country,
                  ratio_death_to_R=0.02,
                  use_constraints=False,
                  beta_default=0.5
@@ -21,10 +19,6 @@ class KoreaMultiCostDeathGdpControllable(BaseMultiCostFunction):
 
         Parameters
         ----------
-        N_region: int
-            Population size of the region.
-        N_country: int
-            Population size of the country.
         ratio_death_to_R: float
             Ratio of deaths over recovered individuals (in [0, 1]).
         use_constraints: bool
@@ -38,13 +32,11 @@ class KoreaMultiCostDeathGdpControllable(BaseMultiCostFunction):
         self.beta = self.beta_default
 
         # Initialize cost functions
-        self.death_toll_cost = DeathToll(id_cost=0, ratio_death_to_R=ratio_death_to_R)
-        self.gdp_recess_cost = GdpRecess(id_cost=1,
-                                         N_region=N_region,
-                                         N_country=N_country,
+        self.death_toll_cost = KoreaDeathToll(id_cost=0, ratio_death_to_R=ratio_death_to_R)
+        self.economy_cost = KoreaEconomy(id_cost=1,
                                          ratio_death_to_R=ratio_death_to_R)
 
-        self.costs = [self.death_toll_cost, self.gdp_recess_cost]
+        self.costs = [self.death_toll_cost, self.economy_cost]
         self.nb_costs = len(self.costs)
 
         if self.use_constraints:
@@ -128,7 +120,6 @@ class KoreaMultiCostDeathGdpControllable(BaseMultiCostFunction):
             else:
                 for c in self.costs:
                     c.set_constraint(1.)
-
 
     def compute_cost(self, previous_state, state, label_to_id, action, others={}):
         """

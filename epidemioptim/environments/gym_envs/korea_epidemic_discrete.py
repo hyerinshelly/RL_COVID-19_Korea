@@ -314,8 +314,7 @@ class KoreaEpidemicDiscrete(BaseEnv):
 
         data = dict(history=self.history.copy(),
                     time_jump=1,
-                    model_states_labels=self.model.internal_states_labels,
-                    icu_capacity=self.model.current_internal_params['icu'])
+                    model_states_labels=self.model.internal_states_labels)
         t = self.history['env_timesteps']
         cumulative_death = [np.sum(self.history['deaths'][:i]) for i in range(len(t) - 1)]
         cumulative_eco_cost = [np.array(self.history['costs'])[:i, 1].sum() for i in range(len(t) - 1)]
@@ -327,17 +326,20 @@ class KoreaEpidemicDiscrete(BaseEnv):
                    aggregated,
                    costs[:, 1],
                    np.array(cumulative_eco_cost),
-                   np.array(self.history['b'])
+                   np.array(self.history['c'])
                    ]
-        labels = ['New Deaths', 'Total Deaths', r'Aggregated Cost', 'New GDP Loss (B)', 'Total GDP Loss (B)', 'Transmission rate']
+        # labels = ['New Deaths', 'Total Deaths', r'Aggregated Cost', 'New GDP Loss (B)', 'Total GDP Loss (B)', 'Transmission rate']
+        # legends = [None, None, [r'$\beta = $' + str(beta) for beta in betas], None, None, None]
+        labels = ['New Deaths', 'Total Deaths', r'Aggregated Cost', 'New Quarantine Loss', 'Total Quarantine Loss',
+                  'Average Contact Number']
         legends = [None, None, [r'$\beta = $' + str(beta) for beta in betas], None, None, None]
         stats_run = dict(to_plot=to_plot,
                          labels=labels,
                          legends=legends)
         data['stats_run'] = stats_run
-        data['title'] = 'Eco cost: {:.2f} B, Death Cost: {}, Aggregated Cost: {:.2f}'.format(cumulative_eco_cost[-1],
-                                                                                             int(cumulative_death[-1]),
-                                                                                             np.sum(self.history['aggregated_costs']))
+        data['title'] = 'Eco cost: {}, Death Cost: {}, Aggregated Cost: {:.2f}'.format(cumulative_eco_cost[-1],
+                                                                                       int(cumulative_death[-1]),
+                                                                                       np.sum(self.history['aggregated_costs']))
         return data
 
 
@@ -348,18 +350,15 @@ if __name__ == '__main__':
 
     simulation_horizon = 364
     stochastic = False
-    region = 'IDF'
 
-    model = get_model(model_id='prague_seirah', params=dict(region=region,
+    model = get_model(model_id='sqeir', params=dict(region=region,
                                                       stochastic=stochastic))
 
-    N_region = model.pop_sizes[region]
-    N_country = np.sum(list(model.pop_sizes.values()))
-    ratio_death_to_R = 0.005
+    # N_region = model.pop_sizes[region]
+    # N_country = np.sum(list(model.pop_sizes.values()))
+    ratio_death_to_R = 0.02
 
-    cost_func = get_cost_function(cost_function_id='multi_cost_death_gdp_controllable', params=dict(N_region=N_region,
-                                                                                                    N_country=N_country,
-                                                                                                    ratio_death_to_R=ratio_death_to_R)
+    cost_func = get_cost_function(cost_function_id='korea_multi_cost_death_ecoonomy_controllable', params=dict(ratio_death_to_R=ratio_death_to_R)
                                   )
 
     env = gym.make('EpidemicDiscrete-v0',
@@ -385,15 +384,14 @@ if __name__ == '__main__':
     plot_stats(t=stats['history']['env_timesteps'],
                states=np.array(stats['history']['model_states']).transpose(),
                labels=stats['model_states_labels'],
-               lockdown=np.array(stats['history']['lockdown']),
-               icu_capacity=stats['icu_capacity'],
+               distancing=np.array(stats['history']['distancing']),
                time_jump=stats['time_jump'])
     plot_stats(t=stats['history']['env_timesteps'][1:],
                states=stats['stats_run']['to_plot'],
                labels=stats['stats_run']['labels'],
                legends=stats['stats_run']['legends'],
                title=stats['title'],
-               lockdown=np.array(stats['history']['lockdown']),
+               distancing=np.array(stats['history']['distancing']),
                time_jump=stats['time_jump'],
                show=True
                )

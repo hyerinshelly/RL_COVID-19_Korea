@@ -19,7 +19,7 @@ plt.rcParams['figure.constrained_layout.use'] = True
 # # # # # # # # # # # # # # # # # # # # # # # #
 
 
-def plot_stats(t, states, labels, legends=None, title=None, lockdown=None, icu_capacity=None, axs=None, fig=None, time_jump=1, show=False):
+def plot_stats(t, states, labels, legends=None, title=None, distancing=None, axs=None, fig=None, time_jump=1, show=False):
     n_plots = len(states)
     if axs is None:
         print_a = True
@@ -57,13 +57,13 @@ def plot_stats(t, states, labels, legends=None, title=None, lockdown=None, icu_c
         #     axs[i].legend(['H', 'ICU', 'ICU capacity'], frameon=False)
 
     # plot lockdown days (for RL simulations)
-    if lockdown is not None and print_a:
-        inds_lockdown = np.argwhere(lockdown == 1).flatten() * time_jump
-        for i in range(len(labels)):
-            max_i = np.max(states[i])
-            range_i = max_i - np.min(states[i])
-            y_lockdown = np.ones([inds_lockdown.size]) * max_i + 0.05 * range_i
-            axs[i].scatter(inds_lockdown, y_lockdown, s=10, c='red')
+    # if distancing is not None and print_a:
+    #     inds_lockdown = np.argwhere(lockdown == 1).flatten() * time_jump
+    #     for i in range(len(labels)):
+    #         max_i = np.max(states[i])
+    #         range_i = max_i - np.min(states[i])
+    #         y_lockdown = np.ones([inds_lockdown.size]) * max_i + 0.05 * range_i
+    #         axs[i].scatter(inds_lockdown, y_lockdown, s=10, c='red')
 
     if title:
         fig.suptitle(title)

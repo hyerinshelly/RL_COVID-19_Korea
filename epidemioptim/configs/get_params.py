@@ -18,6 +18,9 @@ def get_params(config_id, expe_name=None):
     """
     if config_id == 'dqn':
         from epidemioptim.configs.dqn import params
+    # for Korea
+    elif config_id == 'korea_dqn':
+        from epidemioptim.configs.korea_dqn import params
     elif config_id == 'goal_dqn':
         from epidemioptim.configs.goal_dqn import params
     elif config_id == 'goal_dqn_constraints':
