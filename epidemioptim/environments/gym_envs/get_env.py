@@ -48,7 +48,7 @@ if __name__ == '__main__':
                                       params=dict(ratio_death_to_R=ratio_death_to_R)
                                       )
 
-    env = get_env(env_id='EpidemicDiscrete-v0', params=dict(cost_function=cost_function, model=model, simulation_horizon=simulation_horizon))  #params 이거 맞나?
+    env = get_env(env_id='KoreaEpidemicDiscrete-v0', params=dict(cost_function=cost_function, model=model, simulation_horizon=simulation_horizon))  #params 이거 맞나?
     env.reset()
 
     actions = np.random.choice([0, 1, 2, 3, 4, 5], size=53)  # need to change to have 6 actions 0, 1, 2, 3, 4, 5

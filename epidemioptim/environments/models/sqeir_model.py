@@ -81,7 +81,6 @@ def sqeir_model(y: tuple,
 
 class SqeirModel(BaseModel):
     def __init__(self,
-                 region='IDF',
                  stochastic=False,
                  noise_params=0.1,
                  range_delay=(0, 21)
@@ -129,7 +128,7 @@ class SqeirModel(BaseModel):
         internal_params_labels.remove('c25')
         internal_params_labels.remove('c3')
 
-        # Define ODE SEIRAH model
+        # Define ODE SQEIR model
         self.internal_model = sqeir_model
 
         super().__init__(internal_states_labels=['S', 'S_q', 'E', 'E_q', 'I', 'I_q', 'R'],
@@ -221,7 +220,9 @@ class SqeirModel(BaseModel):
         if current_state is None:
             current_state = self._get_current_state()
 
-        # Use the odeint library to run the ODE model.
+        # Use the odeint library to run the ODE model
+        print(current_state.dtype)  # object - should be float64
+        # print(current_state)
         z = odeint(self.internal_model, current_state, np.linspace(0, n, n + 1), args=self._get_model_params())
         self._set_current_state(current_state=z[-1].copy())  # save new current state
 
@@ -234,7 +235,7 @@ class SqeirModel(BaseModel):
 
 if __name__ == '__main__':
     # Get model
-    model = SqeirModel(region='IDF', stochastic=False)
+    model = SqeirModel(stochastic=False)
 
     # Run simulation
     simulation_horizon = 364

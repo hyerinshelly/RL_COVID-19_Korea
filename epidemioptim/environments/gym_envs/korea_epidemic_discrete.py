@@ -46,7 +46,7 @@ class KoreaEpidemicDiscrete(BaseEnv):
             ['cumulative_cost_{}'.format(id_cost) for id_cost in range(self.cost_function.nb_costs)] #+ ['level_c']  # not sure
         self.label_to_id = dict(zip(self.state_labels, np.arange(len(self.state_labels))))
         self.normalization_factors = [self.model.current_internal_params['N']] * len(self.model.internal_states_labels) + \
-                                     [1, 1, self.model.current_internal_params['N'], 150, 1]  # not sure also. 150?
+                                     [1, 1, self.model.current_internal_params['N'], self.model.current_internal_params['N'], 1]  # not sure also. 150?
 
         super().__init__(cost_function=cost_function,
                          model=model,
@@ -358,7 +358,7 @@ if __name__ == '__main__':
     # N_country = np.sum(list(model.pop_sizes.values()))
     ratio_death_to_R = 0.02
 
-    cost_func = get_cost_function(cost_function_id='korea_multi_cost_death_ecoonomy_controllable', params=dict(ratio_death_to_R=ratio_death_to_R)
+    cost_func = get_cost_function(cost_function_id='korea_multi_cost_death_economy_controllable', params=dict(ratio_death_to_R=ratio_death_to_R)
                                   )
 
     env = gym.make('EpidemicDiscrete-v0',
