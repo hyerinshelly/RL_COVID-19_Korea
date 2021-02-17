@@ -221,8 +221,10 @@ class SqeirModel(BaseModel):
             current_state = self._get_current_state()
 
         # Use the odeint library to run the ODE model
-        print(current_state.dtype)  # object - should be float64
+        # print(current_state.dtype)  # object - should be float64
         # print(current_state)
+        current_state = pd.to_numeric(current_state)
+        # print(current_state.dtype)
         z = odeint(self.internal_model, current_state, np.linspace(0, n, n + 1), args=self._get_model_params())
         self._set_current_state(current_state=z[-1].copy())  # save new current state
 

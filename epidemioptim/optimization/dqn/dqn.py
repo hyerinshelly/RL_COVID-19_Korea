@@ -10,6 +10,7 @@ import numpy as np
 import torch
 import torch.optim as optim
 import torch.autograd as ag
+import pandas as pd
 
 from epidemioptim.optimization.shared.replay_buffer import ReplayBuffer
 from epidemioptim.optimization.shared.rollout import run_rollout
@@ -295,6 +296,9 @@ class DQN(BaseAlgorithm):
         q_constraints: nd.array
             Values of the critics estimating the expected constraint violations.
         """
+        # print(state.dtype) # float64
+        # state = pd.to_numeric(state) # not sure
+
         if np.random.rand() > self.epsilon or deterministic:
             if self.use_constraints:
                 # If we use constraint, then the set of action is filtered by the constraint critics

@@ -3,7 +3,7 @@ import numpy as np
 
 params = dict(expe_name='',
               trial_id=0,
-              env_id='EpidemicDiscrete-v0',
+              env_id='KoreaEpidemicDiscrete-v0',
               seed=int(np.random.randint(1e6)),
               num_train_steps=1e6,
               simulation_horizon=364,

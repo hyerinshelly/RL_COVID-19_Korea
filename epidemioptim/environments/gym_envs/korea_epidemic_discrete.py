@@ -46,7 +46,7 @@ class KoreaEpidemicDiscrete(BaseEnv):
             ['cumulative_cost_{}'.format(id_cost) for id_cost in range(self.cost_function.nb_costs)] #+ ['level_c']  # not sure
         self.label_to_id = dict(zip(self.state_labels, np.arange(len(self.state_labels))))
         self.normalization_factors = [self.model.current_internal_params['N']] * len(self.model.internal_states_labels) + \
-                                     [1, 1, self.model.current_internal_params['N'], self.model.current_internal_params['N'], 1]  # not sure also. 150?
+                                     [1, 1, self.model.current_internal_params['N'], self.model.current_internal_params['N']]  # not sure also. 150?
 
         super().__init__(cost_function=cost_function,
                          model=model,
@@ -110,8 +110,8 @@ class KoreaEpidemicDiscrete(BaseEnv):
         # Update env state
         self.env_state_labelled = dict(zip(self.model.internal_states_labels, self.model_state))
         self.env_state_labelled.update(previous_distancing_level=self.previous_distancing_level,
-                                       current_distancing_level=self.distancing_level,
-                                       level_c=self.level_c)
+                                       current_distancing_level=self.distancing_level)
+                                       # level_c=self.level_c)
         # track cumulative costs in the state.
         for id_cost in range(self.nb_costs):
             self.env_state_labelled['cumulative_cost_{}'.format(id_cost)] = self.cumulative_costs[id_cost]
