@@ -226,7 +226,9 @@ class DQN(BaseAlgorithm):
         action = ag.Variable(torch.LongTensor(action))
         indices = np.arange(self.batch_size)
 
-        rewards = [- ag.Variable(torch.FloatTensor(c_func.scale(c))) for c_func, c in zip(self.cost_function.costs, costs.transpose())]
+        # rewards = [- ag.Variable(torch.FloatTensor(c_func.scale(c))) for c_func, c in zip(self.cost_function.costs, costs.transpose())]
+        rewards = [- ag.Variable(torch.FloatTensor(list(c_func.scale(c)))) for c_func, c in
+                   zip(self.cost_function.costs, costs.transpose())]
 
 
         q_preds = self.Q_eval.forward(state)
@@ -307,7 +309,12 @@ class DQN(BaseAlgorithm):
                 # that evaluate the values of each negative costs expected in the future.
                 # If all actions lead to constraint violation, we chose the one that minimizes it.
                 with torch.no_grad():
-                    state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
+                    # state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
+                    if state.dtype == object:
+                        # state = ag.Variable(torch.from_numpy(state).unsqueeze(0))
+                        state = ag.Variable(torch.FloatTensor(list(state)).unsqueeze(0))
+                    else:
+                        state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
                     q_value1, q_value2 = self.Q_eval.forward(state)
                     beta = self.cost_function.beta
                     q_constraints = torch.cat(self.Q_eval_constraints.forward(state)).numpy()
@@ -323,7 +330,12 @@ class DQN(BaseAlgorithm):
                 # If no constraint, then the best action is the one that maximizes
                 # the mixture of values with the chose mixing parameter beta (either by experimenter or by agent).
                 with torch.no_grad():
-                    state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
+                    # state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
+                    if state.dtype == object:
+                        # state = ag.Variable(torch.from_numpy(state).unsqueeze(0))
+                        state = ag.Variable(torch.FloatTensor(list(state)).unsqueeze(0))
+                    else:
+                        state = ag.Variable(torch.FloatTensor(state).unsqueeze(0))
                     q_value1, q_value2 = self.Q_eval.forward(state)
                     beta = self.cost_function.beta
                     q_value = (1 - beta) * q_value1 + beta * q_value2
@@ -467,7 +479,8 @@ class DQN(BaseAlgorithm):
 
     def compute_eval_score(self, eval_episodes, eval_goals):
         aggregated_costs = [np.sum(e['aggregated_costs']) for e in eval_episodes]
-        costs = np.array([np.sum(e['costs'], axis=0) for e in eval_episodes])
+        # costs = np.array([np.sum(e['costs'], axis=0) for e in eval_episodes])
+        costs = np.array([np.sum(e['costs'], axis=0) for e in eval_episodes], dtype=np.float64)
 
         new_logs = dict()
         if self.goal_conditioned:
