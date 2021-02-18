@@ -367,7 +367,7 @@ if __name__ == '__main__':
                    simulation_horizon=simulation_horizon)
     env.reset()
 
-    actions = np.random.choice([0, 1], size=53)
+    actions = np.random.choice([0, 1, 2, 3, 4, 5], size=53)
     actions = np.zeros([53])
     actions[3:3+8] = 1
     t = 0

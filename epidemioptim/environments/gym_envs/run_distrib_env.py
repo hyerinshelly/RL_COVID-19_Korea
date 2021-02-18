@@ -23,7 +23,7 @@ if __name__ == '__main__':
     cost_function = get_cost_function(cost_function_id='korea_multi_cost_death_economy_controllable', params=dict(ratio_death_to_R=ratio_death_to_R)
                                       )
 
-    env = get_env(env_id='EpidemicDiscrete-v0',
+    env = get_env(env_id='KoreaEpidemicDiscrete-v0',
                   params=dist(cost_function=cost_function,
                               model=model,
                               simulation_horizon=simulation_horizon))

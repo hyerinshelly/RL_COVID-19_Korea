@@ -18,7 +18,7 @@ def sqeir_model(y: tuple,
                 Di: float,
                 Dt: float,
                 N: int,
-                beta: float,
+                beta0: float,
                 c: float,
                 q: float):
     """ XXXXX NEED TO BE FIXED XXXXX
@@ -60,13 +60,13 @@ def sqeir_model(y: tuple,
         Next states.
     """
     S, S_q, E, E_q, I, I_q, R = y
-    dSdt = - beta*c*S*I/N - (1-beta)*c*q*S*I + S_q/14
+    dSdt = - beta0*c*S*I/N - (1-beta0)*c*q*S*I/N + S_q/14
 
-    dS_qdt = - S_q/14 + (1-beta)*c*q*S*I
+    dS_qdt = - S_q/14 + (1-beta0)*c*q*S*I/N
 
-    dEdt = - (1-q)*beta*c*S*I/N - E/De
+    dEdt = - (1-q)*beta0*c*S*I/N - E/De
 
-    dE_qdt = - q*beta*c*S*I/N - E_q/De
+    dE_qdt = - q*beta0*c*S*I/N - E_q/De
 
     dIdt = E/De -I/Dt - I/Di
 
@@ -146,7 +146,7 @@ class SqeirModel(BaseModel):
         #label2ind = dict(zip(list(self.fitted_cov.columns), np.arange(len(self.fitted_cov.columns))))
         #for i in self.fitted_params.index:
             #r = self.fitted_params['id'][i]  # region
-        self._all_internal_params_distribs = dict(b=LogNormalDist(params=[0.027, 0.027*self.noise], stochastic=self.stochastic),
+        self._all_internal_params_distribs = dict(beta0=LogNormalDist(params=[0.027, 0.027*self.noise], stochastic=self.stochastic),
                                                   N=DiracDist(params=51844627, stochastic=self.stochastic),
                                                   q=LogNormalDist(params=[0.8, 0.8*self.noise], stochastic=self.stochastic),
                                                   De=NormalDist(params=[5.2, 5.2 * self.noise], stochastic=self.stochastic),
@@ -160,12 +160,12 @@ class SqeirModel(BaseModel):
                                                   c25=NormalDist(params=[10, 10 * self.noise], stochastic=self.stochastic),
                                                   c3=NormalDist(params=[5, 5 * self.noise], stochastic=self.stochastic),
                                                   )
-        self._all_initial_state_distribs = dict(E0=LogNormalDist(params=[69, 69 * self.noise], stochastic=self.stochastic),
-                                                I0=DiracDist(params=2, stochastic=self.stochastic),
-                                                R0=DiracDist(params=0, stochastic=self.stochastic),
-                                                S_q0=DiracDist(params=0, stochastic=self.stochastic),
-                                                E_q0 = DiracDist(params=0, stochastic=self.stochastic),
-                                                I_q0 = DiracDist(params=0, stochastic=self.stochastic),
+        self._all_initial_state_distribs = dict(E0=DiracDist(params=2000, stochastic=self.stochastic),
+                                                I0=DiracDist(params=2850, stochastic=self.stochastic),
+                                                R0=DiracDist(params=3277, stochastic=self.stochastic),
+                                                S_q0=DiracDist(params=13261, stochastic=self.stochastic),
+                                                E_q0 = DiracDist(params=367, stochastic=self.stochastic),
+                                                I_q0 = DiracDist(params=5684, stochastic=self.stochastic),
                                                 )
 
     def _sample_initial_state(self):
