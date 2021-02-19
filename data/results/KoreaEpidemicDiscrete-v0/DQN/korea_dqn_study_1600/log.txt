@@ -1,0 +1,99 @@
+---------------
+Episode: 50.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 100.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 150.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 200.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 250.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 300.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	---------------
+Episode: 350.00
+	Best score so far: inf
+	Eval score: nan
+	Loss 1: nan
+	Loss 2: nan
+	Train, Cost 1: nan
+	Train, Cost 2: nan
+	Train, Aggregated cost: nan
+	Eval, g: [0.25], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.5], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.75], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [0.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	Eval, g: [1.], C1: nan +/- nan, C2: nan +/- nan, Agg: nan +/- nan
+	
