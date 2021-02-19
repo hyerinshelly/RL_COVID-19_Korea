@@ -188,9 +188,10 @@ def setup_visualization(folder, algorithm_str, seed, deterministic_model):
     if seed is None:
         seed = np.random.randint(1e6)
     if algorithm_str == 'DQN':
-        to_add = '0.5/'
+        to_add = '_beta0.5/'
     else:
         to_add = ''
+    # to_add = '/'
     algorithm, cost_function, env, params = setup_for_replay(folder + to_add, seed, deterministic_model)
     if algorithm_str == 'NSGA':
         stats, msg = run_env(algorithm, env)
@@ -307,7 +308,8 @@ def setup_visualization(folder, algorithm_str, seed, deterministic_model):
         def update(beta=widgets.FloatSlider(min=0, max=1, step=0.05, value=0.5)):
             print('Load a new DQN model for beta = {}'.format(beta))
             # Load a new DQN model for each new beta
-            algorithm, cost_function, env, params = setup_for_replay(folder + str(beta) + '/', seed, deterministic_model)
+            # algorithm, cost_function, env, params = setup_for_replay(folder + str(beta) + '/', seed, deterministic_model)
+            algorithm, cost_function, env, params = setup_for_replay(folder + '/', seed, deterministic_model)
             stats, msg = run_env(algorithm, env, goal=np.array([beta]))
             print(msg)
             msg = ''
@@ -337,8 +339,8 @@ def setup_for_replay(folder, seed=np.random.randint(1e6), deterministic_model=Fa
                         params=params['model_params'])
 
     # update reward params
-    params['cost_params']['N_region'] = int(model.pop_sizes[params['model_params']['region']])
-    params['cost_params']['N_country'] = int(np.sum(list(model.pop_sizes.values())))
+    # params['cost_params']['N_region'] = int(model.pop_sizes[params['model_params']['region']])
+    # params['cost_params']['N_country'] = int(np.sum(list(model.pop_sizes.values())))
 
     set_seeds(seed)
 
@@ -367,12 +369,12 @@ def setup_for_replay(folder, seed=np.random.randint(1e6), deterministic_model=Fa
 
 def replot_stats(lines, stats, plots_i, cost_function, high, constraints=None):
     states = stats['stats_run']['to_plot']
-    lockdown = np.array(stats['history']['lockdown'])
-    inds_lockdown = np.argwhere(lockdown == 1).flatten()
+    distancing = np.array(stats['history']['distancing'])
+    inds_distancing = np.argwhere(distancing > 0).flatten()
     for i in range(len(plots_i)):
         ind = plots_i[i]
         lines[i].set_ydata(states[ind])
-        lines[i + 4].set_offsets(np.array([inds_lockdown, np.ones([inds_lockdown.size]) * (high[i] * 0.98)]).transpose())
+        lines[i + 4].set_offsets(np.array([inds_distancing, np.ones([inds_distancing.size]) * (high[i] * 0.98)]).transpose())
     if constraints:
         c_death = cost_function.costs[0].compute_constraint(constraints[0])
         lines[-2].set_ydata([c_death, c_death])
@@ -392,11 +394,11 @@ def setup_fig_notebook(stats):
     labels = stats['stats_run']['labels']
     t = stats['history']['env_timesteps'][1:]
     states = stats['stats_run']['to_plot']
-    lockdown = np.array(stats['history']['lockdown'])
+    distancing = np.array(stats['history']['distancing'])
     legends = stats['stats_run']['legends']
     time_step_size = 1
-    inds_lockdown = np.argwhere(lockdown == 1).flatten() * time_step_size
-    high = [3100, 67000, 1, 180]
+    inds_distancing = np.argwhere(distancing > 0).flatten() * time_step_size
+    high = [10000, 100000, 25000000, 50000000]
 
     fig1, axs = plt.subplots(2, 2, figsize=(9, 7))
     axs = axs.ravel()
@@ -418,7 +420,7 @@ def setup_fig_notebook(stats):
         # line, = axs[i].plot(t, states[:, i])
         lines.append(line)
     for i in range(len(plots_i)):
-        line = axs[i].scatter(inds_lockdown, np.ones([inds_lockdown.size]) * (high[i] * 0.9),
+        line = axs[i].scatter(inds_distancing, np.ones([inds_distancing.size]) * (high[i] * 0.9),
                               s=10,
                               c='r')
         lines.append(line)
