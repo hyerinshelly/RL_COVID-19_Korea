@@ -11,7 +11,7 @@ class KoreaMultiCostDeathEconomyControllable(BaseMultiCostFunction):
     def __init__(self,
                  ratio_death_to_R=0.02,
                  use_constraints=False,
-                 beta_default=0.5
+                 beta_default=1.0
                  ):
         """
         Multi-objective cost functions with two costs: death toll and gdp recess. It is controllable by three parameters:

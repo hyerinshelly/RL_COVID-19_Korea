@@ -188,7 +188,7 @@ def setup_visualization(folder, algorithm_str, seed, deterministic_model):
     if seed is None:
         seed = np.random.randint(1e6)
     if algorithm_str == 'DQN':
-        to_add = '_beta0.5/'
+        to_add = 'beta0.5/'
     else:
         to_add = ''
     # to_add = '/'
@@ -308,8 +308,8 @@ def setup_visualization(folder, algorithm_str, seed, deterministic_model):
         def update(beta=widgets.FloatSlider(min=0, max=1, step=0.05, value=0.5)):
             print('Load a new DQN model for beta = {}'.format(beta))
             # Load a new DQN model for each new beta
-            # algorithm, cost_function, env, params = setup_for_replay(folder + str(beta) + '/', seed, deterministic_model)
-            algorithm, cost_function, env, params = setup_for_replay(folder + '/', seed, deterministic_model)
+            algorithm, cost_function, env, params = setup_for_replay(folder + 'beta'+ str(beta) + '/', seed, deterministic_model)
+            # algorithm, cost_function, env, params = setup_for_replay(folder + '/', seed, deterministic_model)
             stats, msg = run_env(algorithm, env, goal=np.array([beta]))
             print(msg)
             msg = ''
@@ -398,7 +398,7 @@ def setup_fig_notebook(stats):
     legends = stats['stats_run']['legends']
     time_step_size = 1
     inds_distancing = np.argwhere(distancing > 0).flatten() * time_step_size
-    high = [10000, 100000, 25000000, 50000000]
+    high = [100000, 1000000, 25000000, 50000000]
 
     fig1, axs = plt.subplots(2, 2, figsize=(9, 7))
     axs = axs.ravel()

@@ -1,8 +1,0 @@
-,Episode,Best score so far,Eval score,"Eval, g: [0.]: mean_agg","Eval, g: [0.]: std_agg","Eval, g: [0.]: mean_C0","Eval, g: [0.]: mean_C1","Eval, g: [0.]: std_C0","Eval, g: [0.]: std_C1","Eval, g: [0.25]: mean_agg","Eval, g: [0.25]: std_agg","Eval, g: [0.25]: mean_C0","Eval, g: [0.25]: mean_C1","Eval, g: [0.25]: std_C0","Eval, g: [0.25]: std_C1","Eval, g: [0.5]: mean_agg","Eval, g: [0.5]: std_agg","Eval, g: [0.5]: mean_C0","Eval, g: [0.5]: mean_C1","Eval, g: [0.5]: std_C0","Eval, g: [0.5]: std_C1","Eval, g: [0.75]: mean_agg","Eval, g: [0.75]: std_agg","Eval, g: [0.75]: mean_C0","Eval, g: [0.75]: mean_C1","Eval, g: [0.75]: std_C0","Eval, g: [0.75]: std_C1","Eval, g: [1.]: mean_agg","Eval, g: [1.]: std_agg","Eval, g: [1.]: mean_C0","Eval, g: [1.]: mean_C1","Eval, g: [1.]: std_C0","Eval, g: [1.]: std_C1",Loss 1,Loss 2,"Train, Cost 1","Train, Cost 2","Train, Aggregated cost"
-0,50,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1,100,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-2,150,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-3,200,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-4,250,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-5,300,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-6,350,inf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

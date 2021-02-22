@@ -6,16 +6,90 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 from scipy.stats import ttest_ind
-from epidemioptim.utils import get_stat_func, get_repo_path
+# import sys
+# sys.path.append('../')
+# from epidemioptim.utils import get_stat_func, get_repo_path
+
+def get_stat_func(line='mean', err='std'):
+    """
+    Wrapper around statistics measures: central tendencies (mean, median), and errors (std, sem, percentiles, etc)
+
+    Parameters
+    ----------
+    line: str
+        Central tendencies (mean or median).
+    err: str
+        Error (std, sem, range or interquartile)
+
+    Returns
+    -------
+    line_f, err_min, err_max: functions
+        Functions ready to apply to data (including data containing nans) for the central tendency, low error and high error.
+
+    """
+    if line == 'mean':
+        def line_f(a):
+            return np.nanmean(a, axis=0)
+    elif line == 'median':
+        def line_f(a):
+            return np.nanmedian(a, axis=0)
+    else:
+        raise NotImplementedError
+
+    if err == 'std':
+
+        def err_plus(a):
+            return line_f(a) + np.nanstd(a, axis=0)
+
+        def err_minus(a):
+            return line_f(a) - np.nanstd(a, axis=0)
+    elif err == 'sem':
+
+        def err_plus(a):
+            return line_f(a) + np.nanstd(a, axis=0) / np.sqrt(a.shape[0])
+
+        def err_minus(a):
+            return line_f(a) - np.nanstd(a, axis=0) / np.sqrt(a.shape[0])
+    elif err == 'range':
+
+        def err_plus(a):
+            return np.nanmax(a, axis=0)
+
+        def err_minus(a):
+            return np.nanmin(a, axis=0)
+    elif err == 'interquartile':
+
+        def err_plus(a):
+            return np.nanpercentile(a, q=75, axis=0)
+
+        def err_minus(a):
+            return np.nanpercentile(a, q=25, axis=0)
+    else:
+        raise NotImplementedError
+
+    return line_f, err_minus, err_plus
+
+
+def get_repo_path():
+    dir_path = os.path.dirname(os.path.realpath(__file__)).split('/')
+    if dir_path.count('epidemioptim') == 1:
+        start_ind = dir_path.index('epidemioptim')
+    else:
+        start_ind = - (list(reversed(dir_path)).index('epidemioptim') + 1)
+
+    repo_path = '/'.join(dir_path[:start_ind]) + '/'
+    return repo_path
+
+
 font = {'weight':'bold', 'size'   : 16}
 matplotlib.rc('font', **font)
 
 LINE = 'mean'
 ERR = 'sem'
-COSTS_LABELS = ['# deaths', 'GDP cost (B)']
+COSTS_LABELS = ['# deaths', '# quarantines (B)']
 COST_LABELS2 = ['Health cost', 'Economic cost']
 XLIM = (0, 60000)
-YLIM = (0, 180)
+YLIM = (0, 50000000)
 X_STEP = 50
 SCATTER_WIDTH = 150
 LINEWIDTH = 4
@@ -422,17 +496,18 @@ if __name__ == '__main__':
 
     matplotlib_colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown', 'tab:pink', 'tab:grey', 'tab:olive', 'tab:cyan']
 
+    print(RES_FOLDER) # for test
     os.makedirs(RES_FOLDER + 'res/', exist_ok=True)
     max_costs, min_costs = compute_max_costs(RES_FOLDER)
     for algo in os.listdir(RES_FOLDER):
         if 'res' not in algo:
             algo_folder = RES_FOLDER + algo + '/'
-            # extract_res(algo_folder, algo, max_costs, min_costs)
-            # plot_algo_fronts(algo_folder)
-            # beta_plot(algo_folder)
+            extract_res(algo_folder, algo, max_costs, min_costs)
+            plot_algo_fronts(algo_folder)
+            beta_plot(algo_folder)
 
-    print('\n\tComparison plots')
-    plot_multi_algo(RES_FOLDER)
+    # print('\n\tComparison plots')
+    # plot_multi_algo(RES_FOLDER)
 
 
 
