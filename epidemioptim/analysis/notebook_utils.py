@@ -398,7 +398,7 @@ def setup_fig_notebook(stats):
     legends = stats['stats_run']['legends']
     time_step_size = 1
     inds_distancing = np.argwhere(distancing > 0).flatten() * time_step_size
-    high = [100000, 1000000, 25000000, 50000000]
+    high = [100000, 25000000, 25000000, 50000000]
 
     fig1, axs = plt.subplots(2, 2, figsize=(9, 7))
     axs = axs.ravel()
